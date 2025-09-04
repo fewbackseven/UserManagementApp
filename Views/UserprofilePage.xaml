@@ -1,0 +1,57 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UserManagementApp.Views.UserprofilePage"
+             Title="User Profile">
+
+    <ContentPage.Resources>
+        <Style x:Key="ReadonlyEntryStyle" TargetType="Entry">
+            <Setter Property="BackgroundColor" Value="LightGray" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Basic Info -->
+            <Entry Placeholder="Email" Text="{Binding Email}" IsEnabled="False" Style="{StaticResource ReadonlyEntryStyle}" />
+            <Entry Placeholder="First Name" Text="{Binding FirstName}" />
+            <Entry Placeholder="Last Name" Text="{Binding LastName}" />
+            <Picker Title="Gender" SelectedItem="{Binding Gender}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                        <x:String>Other</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <DatePicker Date="{Binding DateOfBirth}" />
+
+            <!-- Contact Info -->
+            <Entry Placeholder="Phone Number" Text="{Binding PhoneNumber}" />
+            <Entry Placeholder="Alternate Phone Number" Text="{Binding AlternatePhoneNumber}" />
+
+            <!-- Address -->
+            <Entry Placeholder="Address Line 1" Text="{Binding AddressLine1}" />
+            <Entry Placeholder="Address Line 2" Text="{Binding AddressLine2}" />
+            <Entry Placeholder="City" Text="{Binding City}" />
+            <Entry Placeholder="State" Text="{Binding State}" />
+            <Entry Placeholder="Postal Code" Text="{Binding PostalCode}" />
+            <Entry Placeholder="Country" Text="{Binding Country}" />
+
+            <!-- Identity -->
+            <Entry Placeholder="Aadhaar Number" Text="{Binding AadhaarNumber}" />
+            <Entry Placeholder="PAN Number" Text="{Binding PANNumber}" />
+
+            <!-- Preferences -->
+            <Entry Placeholder="Profile Picture URL" Text="{Binding ProfilePictureUrl}" />
+            <Entry Placeholder="Time Zone" Text="{Binding TimeZone}" />
+            <Entry Placeholder="Language Preference" Text="{Binding LanguagePreference}" />
+
+            <!-- Action Buttons -->
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Button Text="Cancel" Command="{Binding CancelCommand}" BackgroundColor="LightGray" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

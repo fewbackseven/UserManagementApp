@@ -1,0 +1,9 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UserManagementApp.Views.HomePage"
+             Title="Home"
+             Shell.NavBarIsVisible="True">
+    <VerticalStackLayout Padding="20">
+        <Label Text="Welcome!" FontSize="24" HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>
