@@ -5,5 +5,9 @@
              Shell.NavBarIsVisible="True">
     <VerticalStackLayout Padding="20">
         <Label Text="Welcome!" FontSize="24" HorizontalOptions="Center" />
+        <Button Text="Logout"
+                BackgroundColor="DarkRed"
+                TextColor="White"
+                Command="{Binding LogoutCommand}" />
     </VerticalStackLayout>
 </ContentPage>

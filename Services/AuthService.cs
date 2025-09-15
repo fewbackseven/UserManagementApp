@@ -39,20 +39,29 @@ namespace UserManagementApp.Services
             return await response.Content.ReadFromJsonAsync<AuthResponse>();
         }
 
-        public async Task LogoutAsync(LogoutRequest request)
+        public async Task<bool> LogoutAsync(LogoutRequest request)
         {
-            var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", request);
-
-            if (response.IsSuccessStatusCode)
+            try
             {
-                SecureStorage.Remove("access_token");
-                SecureStorage.Remove("refresh_token");
+                var response = await _httpClient.PostAsJsonAsync("/api/auth/logout", request);
 
-                // Optionally navigate to login
-                await Shell.Current.GoToAsync("///LoginPage");
+                if (response.IsSuccessStatusCode)
+                {
+                    SecureStorage.Remove("access_token");
+                    SecureStorage.Remove("refresh_token");
+
+                    // Optionally navigate to login
+                    await Shell.Current.GoToAsync("///LoginPage");
+                }
+
+                response.EnsureSuccessStatusCode();
+                return true;
             }
+            catch (Exception ex)
+            {
 
-            response.EnsureSuccessStatusCode();
+                return false;
+            }
         }
 
         public async Task<bool> TryRefreshTokenAsync()

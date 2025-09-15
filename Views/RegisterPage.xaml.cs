@@ -6,10 +6,10 @@ namespace UserManagementApp.Views
     public partial class RegisterPage : ContentPage
     {
 
-        public RegisterPage(AuthService authService)
+        public RegisterPage(IAuthService authService, IAlertService alertService)
         {
             InitializeComponent();
-            BindingContext = new RegisterViewModel(authService);
+            BindingContext = new RegisterViewModel(authService,alertService);
         }
 
     }

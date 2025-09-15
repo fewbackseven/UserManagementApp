@@ -5,9 +5,9 @@ namespace UserManagementApp.Views;
 
 public partial class LoginPage : ContentPage
 {
-    public LoginPage(IAuthService authService)
+    public LoginPage(IAuthService authService, IAlertService alertService)
     {
         InitializeComponent();
-        BindingContext = new LoginViewModel(authService);
+        BindingContext = new LoginViewModel(authService, alertService);
     }
 }

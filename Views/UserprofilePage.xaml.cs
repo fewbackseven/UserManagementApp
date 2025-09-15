@@ -7,10 +7,10 @@ namespace UserManagementApp.Views
     {
         private readonly UserProfileViewModel _viewModel;
 
-        public UserprofilePage(IUserProfileService userProfileService)
+        public UserprofilePage(IUserProfileService userProfileService, IAlertService alertService)
         {
             InitializeComponent();
-            _viewModel = new UserProfileViewModel(userProfileService);
+            _viewModel = new UserProfileViewModel(userProfileService, alertService);
             BindingContext = _viewModel;
         }
 

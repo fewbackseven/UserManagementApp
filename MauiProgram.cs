@@ -30,10 +30,11 @@ namespace UserManagementApp
 
 
             builder.Services.AddSingleton<IAuthService,AuthService>();
-
+            builder.Services.AddSingleton<IAlertService, AlertService>();
             builder.Services.AddSingleton<IUserProfileService, UserProfileService>();
 
             builder.Services.AddSingleton<LoginPage>();
+            builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<RegisterPage>();
             builder.Services.AddSingleton<UserprofilePage>();
 
