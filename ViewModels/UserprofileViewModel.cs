@@ -11,11 +11,13 @@ namespace UserManagementApp.ViewModels
     public partial class UserProfileViewModel : INotifyPropertyChanged
     {
         private readonly IUserProfileService _profileService;
+        private readonly IAlertService _alertService;
 
-        public UserProfileViewModel(IUserProfileService profileService)
+        public UserProfileViewModel(IUserProfileService profileService, IAlertService alertService)
         {
             _profileService = profileService;
             SaveCommand = new Command(async () => await SaveProfileAsync());
+            _alertService = alertService;
         }
 
         public ICommand SaveCommand { get; }
@@ -29,7 +31,9 @@ namespace UserManagementApp.ViewModels
         }
 
         private string _email;
-        public string Email { get => _email;
+        public string Email
+        {
+            get => _email;
             set { _email = value; OnPropertyChanged(); }
         }
 
@@ -190,7 +194,7 @@ namespace UserManagementApp.ViewModels
                 FirstName = FirstName,
                 LastName = LastName,
                 Gender = Gender,
-                DateOfBirth = DateOfBirth,
+                //DateOfBirth = DateOfBirth,
                 PhoneNumber = PhoneNumber,
                 AlternatePhoneNumber = AlternatePhoneNumber,
                 AddressLine1 = AddressLine1,
@@ -209,7 +213,14 @@ namespace UserManagementApp.ViewModels
             if (Id == Guid.Empty)
                 await _profileService.CreateUserProfileAsync(profile);
             else
-                await _profileService.UpdateUserProfileAsync(Id.ToString(), profile);
+            {
+                bool isUpdated = await _profileService.UpdateUserProfileAsync(Id.ToString(), profile);
+
+                if (isUpdated)
+                    await Shell.Current.GoToAsync("///HomePage");
+                else
+                    await _alertService.ShowAlertAsync("Error!", "Failed to save the Data!", "OK");
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

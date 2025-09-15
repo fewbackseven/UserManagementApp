@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using UserManagementApp.Models;
@@ -9,12 +10,14 @@ namespace UserManagementApp.ViewModels
     public class LoginViewModel : INotifyPropertyChanged
     {
         private readonly IAuthService _authService;
+        private readonly IAlertService _alertService;
 
-        public LoginViewModel(IAuthService authService)
+        public LoginViewModel(IAuthService authService, IAlertService alertService)
         {
             _authService = authService;
             LoginCommand = new Command(async () => await LoginAsync());
             NavigateToRegisterCommand = new Command(async () => await Shell.Current.GoToAsync("///RegisterPage"));
+            _alertService = alertService;
         }
 
         public string Email { get; set; } = string.Empty;
@@ -44,6 +47,14 @@ namespace UserManagementApp.ViewModels
             {
                 ErrorMessage = string.Empty;
                 var request = new LoginRequest { Email = Email, Password = Password };
+                var errors = Helpers.ValidationHelper.Validate(request);
+                if (errors.Any())
+                {
+                    string message = string.Join("\n", errors);                    
+                    await _alertService.ShowAlertAsync("Validation Failed!", message, "OK");
+                    return;
+                }
+
                 var response = await _authService.LoginAsync(request);
 
                 if (response?.AccessToken != null)
@@ -54,7 +65,7 @@ namespace UserManagementApp.ViewModels
                     await SecureStorage.SetAsync("user_email", request.Email);
 
                     // TODO: Navigate to home or store token
-                    await Shell.Current.GoToAsync("///HomePage");
+                    await Shell.Current.GoToAsync("//HomePage");
                 }
                 else
                 {

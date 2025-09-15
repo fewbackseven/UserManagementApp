@@ -14,12 +14,14 @@ namespace UserManagementApp.ViewModels
     public class RegisterViewModel:INotifyPropertyChanged
     {
 
-        private readonly AuthService _authService;
+        private readonly IAuthService _authService;
+        private readonly IAlertService _alertService;
 
-        public RegisterViewModel(AuthService authService)
+        public RegisterViewModel(IAuthService authService, IAlertService alertService)
         {
             _authService = authService;
             RegisterCommand = new Command(async () => await RegisterAsync());
+            _alertService = alertService;
         }
 
         public string Email { get; set; } = string.Empty;
@@ -48,12 +50,25 @@ namespace UserManagementApp.ViewModels
                     UserName = UserName,
                     Password = Password
                 };
+                
+                var errors = Helpers.ValidationHelper.Validate(request);
+                if (errors.Any())
+                {
+                    string message = string.Join("\n", errors);
+                    await _alertService.ShowAlertAsync("Oops! Validation Failed.", message, "OK");
+                    return;
+                }
 
+                //TODO: Show validation errors from Backend
                 var response = await _authService.RegisterAsync(request);
 
                 if (response?.AccessToken != null)
                 {
-                    await Shell.Current.GoToAsync("///HomePage");
+                    await SecureStorage.SetAsync("access_token", response.AccessToken);
+                    await SecureStorage.SetAsync("refresh_token", response.RefreshToken ?? "NA");
+                    await SecureStorage.SetAsync("user_email", request.Email);
+
+                    await Shell.Current.GoToAsync("//HomePage");
                 }
                 else
                 {

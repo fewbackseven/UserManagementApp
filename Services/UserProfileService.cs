@@ -1,4 +1,6 @@
 ﻿using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using UserManagementApp.Models;
 
 namespace UserManagementApp.Services
@@ -55,6 +57,7 @@ namespace UserManagementApp.Services
             try
             {
                 await AddAuthHeaderAsync();
+                var json = JsonSerializer.Serialize(profile, new JsonSerializerOptions { WriteIndented = true});
                 var response = await _httpClient.PutAsJsonAsync($"api/userprofile/{Id}", profile);
                 return response.IsSuccessStatusCode;
             }

@@ -6,7 +6,7 @@ namespace UserManagementApp.Services
     {
         Task LogoutAllAsync();
         Task<bool> TryRefreshTokenAsync();
-        Task LogoutAsync(LogoutRequest request);
+        Task<bool> LogoutAsync(LogoutRequest request);
         Task<AuthResponse?> LoginAsync(LoginRequest request);
         Task<AuthResponse?> RegisterAsync(RegisterRequest request);
     }
