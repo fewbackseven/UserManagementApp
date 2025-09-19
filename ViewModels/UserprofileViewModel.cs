@@ -15,12 +15,19 @@ namespace UserManagementApp.ViewModels
 
         public UserProfileViewModel(IUserProfileService profileService, IAlertService alertService)
         {
-            _profileService = profileService;
-            SaveCommand = new Command(async () => await SaveProfileAsync());
+            _profileService = profileService;            
             _alertService = alertService;
+            SaveCommand = new Command(async () => await SaveProfileAsync());
+            CancelCommand = new Command(async () => await CancelUpdateAsync());
+        }
+
+        private async Task CancelUpdateAsync()
+        {
+            await Shell.Current.GoToAsync("//ProfilePage");
         }
 
         public ICommand SaveCommand { get; }
+        public ICommand CancelCommand { get; }
 
         // Properties
         private Guid _id;

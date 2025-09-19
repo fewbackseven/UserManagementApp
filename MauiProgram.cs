@@ -37,6 +37,7 @@ namespace UserManagementApp
             builder.Services.AddSingleton<HomePage>();
             builder.Services.AddSingleton<RegisterPage>();
             builder.Services.AddSingleton<UserprofilePage>();
+            builder.Services.AddSingleton<ProfilePage>();
 
             return builder.Build();
         }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="UserManagementApp.Views.ProfilePage"
+             Title="ProfilePage">
+    
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <!-- Profile Image -->
+            <Frame WidthRequest="120" HeightRequest="120" CornerRadius="60" IsClippedToBounds="True" HorizontalOptions="Center">
+                <Image Source="profile_placeholder.png" Aspect="AspectFill"/>
+            </Frame>
+
+            <!-- Name -->
+            <Entry x:Name="NameEntry" Placeholder="Name" IsEnabled="False" Text="{Binding Name}" />
+            
+            <!-- Mobile with Change -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry Grid.Column="0" x:Name="MobileEntry" Placeholder="Mobile" IsEnabled="False" Text="{Binding Mobile}"/>
+                <!--<Button Grid.Column="1" Text="CHANGE"  Command="{Binding ChangeMobileCommand}"/>-->
+            </Grid>
+
+            <!-- Email with Change -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Entry Grid.Column="0" x:Name="EmailEntry" Placeholder="Email" IsEnabled="False" Text="{Binding Email}"/>
+                <!--<Button Grid.Column="1" Text="CHANGE"  Command="{Binding ChangeEmailCommand}"/>-->
+            </Grid>
+
+            <!-- Date of Birth -->
+            <DatePicker x:Name="DobPicker" Date="{Binding DateOfBirth}" IsEnabled="False" />
+
+            <!-- Anniversary -->
+            <DatePicker x:Name="AnniversaryPicker" Date="{Binding Anniversary}" IsEnabled="False"/>
+
+            <!-- Gender -->
+            <Picker Title="Gender" SelectedItem="{Binding Gender}" IsEnabled="False">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Male</x:String>
+                        <x:String>Female</x:String>
+                        <x:String>Other</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <!-- Update Button -->
+            <Button Text="Update Profile"
+                    IsEnabled="{Binding IsFormValid}"
+                    Command="{Binding UpdateProfileCommand}"
+                    BackgroundColor="Gray"
+                    TextColor="White"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
