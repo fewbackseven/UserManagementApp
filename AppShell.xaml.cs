@@ -9,6 +9,7 @@ namespace UserManagementApp
             Routing.RegisterRoute("LoginPage", typeof(LoginPage));
             Routing.RegisterRoute("HomePage", typeof(HomePage));
             Routing.RegisterRoute("RegisterPage", typeof(RegisterPage));
+            Routing.RegisterRoute("UserprofilePage", typeof(UserprofilePage));
 
             InitializeComponent();
         }
